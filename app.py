@@ -9,7 +9,7 @@ st.title("🍼 話すだけで育児を記録するアプリ")
 # JavaScript + Web Speech API
 st.markdown("""
 <button onclick="startRecognition()">🎙 話す</button>
-<p id="result"></p>
+<p id="result" style="color: blue; font-weight: bold;"></p>
 
 <script>
   var recognition;
@@ -25,25 +25,13 @@ st.markdown("""
     recognition.onresult = function(event) {
       var text = event.results[0][0].transcript;
       document.getElementById("result").innerHTML = "認識結果：" + text;
-      window.parent.postMessage({type: 'speech', message: text}, "*");
     };
     recognition.start();
   }
-
-  window.addEventListener("message", (event) => {
-    if (event.data.type === "speech") {
-      const input = window.parent.document.querySelector("input[type='text']");
-      if (input) {
-        input.value = event.data.message;
-        input.dispatchEvent(new Event("input", { bubbles: true }));
-      }
-    }
-  });
 </script>
 """, unsafe_allow_html=True)
 
-# 入力欄（音声が自動入力される）
-input_text = st.text_input("📝 話した内容：")
+input_text = st.text_input("📝 認識結果をコピーしてここに貼ってください")
 
 # CSV記録用の関数
 def save_to_csv(text):
