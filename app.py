@@ -70,4 +70,7 @@ if st.button("📖 記録履歴を表示する"):
 
 # 著作権表記
 st.markdown("---")
-st.markdown("© 2025 gyuttofamily - このアプリのアイデア・構成は著作権で保護されています。無断転載・商用利用を禁じます。"
+st.markdown(
+    "© 2025 gyuttofamily｜このアプリは家族のための非営利プロジェクトです。無断転載・商用利用を禁じます。",
+    unsafe_allow_html=True
+)
