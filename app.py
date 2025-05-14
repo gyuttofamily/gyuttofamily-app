@@ -93,3 +93,7 @@ if st.button("📋 記録履歴を見る"):
         st.dataframe(df)
     else:
         st.warning("まだ記録がありません。")
+
+st.markdown(
+    "© 2025 gyuttofamily｜このアプリは家族のための非営利プロジェクトです。無断転載・商用利用を禁じます。",
+    unsafe_allow_html=True
