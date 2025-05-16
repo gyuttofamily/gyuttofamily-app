@@ -39,10 +39,15 @@ def save_to_csv(date, text, region):
 def support_message(text, region):
     suggestions = []
 
+from urllib.parse import quote_plus  # ← 追加（URLエンコード用）
+
+# 例：疲れた対応の部分で
     if any(word in text for word in ["疲れた", "しんどい", "つらい"]):
         query = f"{region} 産後ケア"
-        url = f"https://www.google.com/search?q={query}"
+        encoded_query = quote_plus(query)
+        url = f"https://www.google.com/search?q={encoded_query}"
         suggestions.append(f"💡 お住まいの地域にも、産後ケアの支援があります。 [こちらで検索する]({url})")
+
 
     if any(word in text for word in ["ねむれない", "寝不足"]):
         query = f"{region} 一時預かり"
