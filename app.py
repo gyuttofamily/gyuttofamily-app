@@ -10,12 +10,8 @@ st.title("🍼 手入力で育児を記録するアプリ")
 selected_date = st.date_input("📅 記録する日付を選んでください", value=datetime.today())
 
 # 入力欄（手入力）
-input_text = st.text_input("📝 今日の気持ちや出来事を入力してください")
+input_text = st.text_input("📝 今日の気持ちや育児記録を入力してください")
 
-# Googleスプレッドシートに記録する関数
-def save_to_gsheet(date, text):
-    dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    sheet.append_row([dt, date.strftime("%Y-%m-%d"), text])
 
 # やさしいサポート提案（キーワードベース）
 def support_message(text):
