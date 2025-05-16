@@ -6,10 +6,10 @@ st.set_page_config(page_title="ぎゅっと家族の記録", layout="centered")
 
 st.title("🍼 話すだけで育児を記録するアプリ")
 
-# JavaScript + Web Speech API
+# JavaScript + Web Speech API（認識結果を表示 → ユーザーがコピー）
 st.markdown("""
 <button onclick="startRecognition()">🎙 話す</button>
-<p id="result"></p>
+<p id="result" style="color: blue; font-weight: bold;"></p>
 
 <script>
   var recognition;
@@ -24,26 +24,15 @@ st.markdown("""
     recognition.maxAlternatives = 1;
     recognition.onresult = function(event) {
       var text = event.results[0][0].transcript;
-      document.getElementById("result").innerHTML = "認識結果：" + text;
-      window.parent.postMessage({type: 'speech', message: text}, "*");
+      document.getElementById("result").innerHTML = "認識結果：" + text + "<br><small>（テキストボックスにコピーして貼り付けてください）</small>";
     };
     recognition.start();
   }
-
-  window.addEventListener("message", (event) => {
-    if (event.data.type === "speech") {
-      const input = window.parent.document.querySelector("input[type='text']");
-      if (input) {
-        input.value = event.data.message;
-        input.dispatchEvent(new Event("input", { bubbles: true }));
-      }
-    }
-  });
 </script>
 """, unsafe_allow_html=True)
 
-# 入力欄（音声が自動入力される）
-input_text = st.text_input("📝 話した内容：")
+# 入力欄（ユーザーが認識結果をコピペ）
+input_text = st.text_input("📝 認識結果をここに貼り付けてください")
 
 # CSV記録用の関数
 def save_to_csv(text):
@@ -67,7 +56,6 @@ if st.button("📖 記録履歴を表示する"):
         st.dataframe(df)
     except FileNotFoundError:
         st.info("まだ記録がありません。")
-
 
 # 著作権表記
 st.markdown("---")
