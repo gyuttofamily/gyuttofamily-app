@@ -8,12 +8,6 @@ st.set_page_config(page_title="ぎゅっと家族の記録", layout="centered")
 
 st.title("🍼 手入力で育児を記録するアプリ")
 
-# Google Sheets連携の設定
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
-client = gspread.authorize(creds)
-sheet = client.open("gyuttofamily育児記録").sheet1
-
 # 日付選択（カレンダーから選べる）
 selected_date = st.date_input("📅 記録する日付を選んでください", value=datetime.today())
 
