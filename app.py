@@ -4,35 +4,10 @@ from datetime import datetime
 
 st.set_page_config(page_title="ぎゅっと家族の記録", layout="centered")
 
-st.title("🍼 話すだけで育児を記録するアプリ")
+st.title("🍼 手入力で育児を記録するアプリ")
 
-# JavaScript + Web Speech API（認識結果を表示 → ユーザーがコピー）
-st.markdown("""
-<button onclick="startRecognition()">🎙 話す</button>
-<p id="result" style="color: blue; font-weight: bold;"></p>
-
-<script>
-  var recognition;
-  function startRecognition() {
-    if (!('webkitSpeechRecognition' in window)) {
-      document.getElementById('result').innerHTML = "ブラウザが音声認識に対応していません。";
-      return;
-    }
-    recognition = new webkitSpeechRecognition();
-    recognition.lang = "ja-JP";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.onresult = function(event) {
-      var text = event.results[0][0].transcript;
-      document.getElementById("result").innerHTML = "認識結果：" + text + "<br><small>（テキストボックスにコピーして貼り付けてください）</small>";
-    };
-    recognition.start();
-  }
-</script>
-""", unsafe_allow_html=True)
-
-# 入力欄（ユーザーが認識結果をコピペ）
-input_text = st.text_input("📝 認識結果をここに貼り付けてください")
+# 入力欄（手入力）
+input_text = st.text_input("📝 今日の気持ちや出来事を入力してください")
 
 # CSV記録用の関数
 def save_to_csv(text):
@@ -56,6 +31,7 @@ if st.button("📖 記録履歴を表示する"):
         st.dataframe(df)
     except FileNotFoundError:
         st.info("まだ記録がありません。")
+
 
 # 著作権表記
 st.markdown("---")
